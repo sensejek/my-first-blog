@@ -1,0 +1,55 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <div  class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <h1>{% block title %} {{ object.title }} {% endblock title %}</h1>
+        <p class=" text-muted">{{ post.author }} | {{ post.created_on }}</p>
+        <p class="card-text ">{{ object.content | safe }}</p>
+      </div>
+    </div>
+  </div>
+  {% if user.is_superuser %}
+  <a href="{% url 'edit_post' post.pk %}" class="btn btn-primary">Edytuj post</a>
+  <a href="{% url 'delete_post' post.pk %}" class="btn btn-primary">Usuń post</a>
+  {% endif %}
+  {% if user.is_authenticated %}
+  <div class="col-md-8 card mb-4  mt-3 ">
+    <div class="card-body">
+      <h3>Dodaj komentarz</h3>
+      <form method='POST'>
+        {% csrf_token %}
+        <div class="form-group">
+          <span class="ml-2"></span>{{ form.body.label_tag }}
+          <textarea class="form-control {% if form.body.errors %}is-invalid{% endif %}" id="id_content"
+            name="body" rows="4">{{ form.body.value|default:'' }}</textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Dodaj</button>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-8 card mb-4  mt-3 ">
+    <div class="card-body">
+      <h4>Komentarze</h4>
+      {% if not post.comments.all %}
+        <p>Brak komentarzy</p>
+      {% else %}
+      <h8>Ilość komentarzy: {{ comments.count }}</h8>
+        {% for comment in post.comments.all %}
+        <div class="comments" style="padding: 10px;">
+          <p class=" text-muted">{{ comment.author }} | {{ comment.created_on }}</p>
+          {{ comment.body | linebreaks }}
+        </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+  {% else %}
+  <div class="col-md-8 card mb-4  mt-3 ">
+    <div class="card-body">
+      <h4>Komentarze mogą czytać i dodawać tylko zalogowani użytkownicy!</h4>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock content %}

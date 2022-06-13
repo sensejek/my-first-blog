@@ -1,0 +1,22 @@
+{% extends "base.html"%}
+{% block title %} - edycja posta{% endblock %}
+{% block content%}
+<div class="container">
+  <div class="row">
+      <!-- Blog Entries Column -->
+      <div class="col-md-8 mt-3 left">
+          <div class="card mb-4">
+            <div class="card-body">
+                <h2>Edytuj post "{{ post.title }}"</h2>
+                <form method="post" align = "center">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Zapisz" class="btn btn-primary"/>
+                    <a href="{% url 'post_detail' post.pk  %}" class="btn btn-danger">Anuluj</a>
+                    </form>
+            </div>
+           </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

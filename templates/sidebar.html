@@ -1,0 +1,26 @@
+{% block sidebar %}
+        <style>
+                .card{
+                    box-shadow: 0 16px 48px #E3E7EB;
+                }
+
+                #bg{
+                    background-size: 1800px 900px;
+                    background-repeat: no-repeat;
+                    background-position: top;
+                    background-attachment: fixed;
+                }
+        </style>
+
+        <div class="col-md-4 float-right ">
+        <div class="card my-4">
+                <h5 class="card-header">O blogu</h5>
+            <div class="card-body">
+                <p class="card-text">Jest to blog o tematyce piłkarskiej. Zapraszam do czytania!</p>
+                {% load static %}
+                <img src="{% static 'photo2.JPG' %}" alt="RESPECT" width = "100%" height = "auto">
+            </div>
+            
+        </div>
+        </div>
+{% endblock sidebar %}
